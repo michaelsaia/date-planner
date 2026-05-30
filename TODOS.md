@@ -90,10 +90,12 @@
   - Display the "Small Surprise" section (collapsible/spoiler)
 
 ## Phase 6: Save & Bookmark System
-* [ ] **Task 18: Implement bookmark/save functionality** (todo)
+* [x] **Task 18: Implement bookmark/save functionality** (done)
   - Heart/bookmark icon on each date idea card and detail page
-  - API endpoint to toggle bookmark (add/remove)
-  - Optimistic UI update on click
+  - POST /api/bookmarks toggle endpoint with zod validation
+  - GET /api/bookmarks returns user's bookmarked IDs
+  - BookmarkButton component with optimistic UI and event propagation handling
+  - Bookmark state wired into SuggestionsFeed and DateIdeaDetail
 * [ ] **Task 19: Build saved dates page** (todo)
   - List of all bookmarked date ideas for the current user
   - Sort by date saved; option to remove bookmarks
