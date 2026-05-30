@@ -106,10 +106,12 @@
 ## Phase 7: Polish, Mobile Responsiveness & UX
 
 ### Task 20: Mobile-First Responsive Layout Overhaul
-* [ ] **20a: Navigation & layout shell** (todo)
-  - Add a sticky mobile bottom navigation bar (Explore, Saved, Profile) visible below `md` breakpoint
-  - Convert existing desktop nav to a top header bar hidden on mobile (or hamburger menu)
-  - Ensure root layout uses proper viewport meta and `safe-area-inset` padding for notched devices
+* [x] **20a: Navigation & layout shell** (done)
+  - Added sticky mobile bottom navigation bar (Explore, Saved, Profile) in `src/components/nav/MobileNav.tsx`, visible below `md` breakpoint
+  - Created desktop top header bar in `src/components/nav/DesktopNav.tsx`, hidden on mobile (`hidden md:flex`)
+  - NavShell wrapper component in `src/components/nav/NavShell.tsx` combines both navs with conditional bottom padding
+  - Root layout exports `viewport` with `viewportFit: "cover"` and MobileNav uses `env(safe-area-inset-bottom)`
+  - QA fix: resolved nested `<main>` tag on homepage, conditional `pb-16` only when mobile nav visible
 * [ ] **20b: Explore page mobile refinements** (todo)
   - Switch suggestion grid to single-column stack on `< sm` breakpoints
   - Increase tap target size on MoodFilter toggle buttons and BudgetFilter presets to ≥ 44px
