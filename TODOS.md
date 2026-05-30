@@ -112,11 +112,12 @@
   - NavShell wrapper component in `src/components/nav/NavShell.tsx` combines both navs with conditional bottom padding
   - Root layout exports `viewport` with `viewportFit: "cover"` and MobileNav uses `env(safe-area-inset-bottom)`
   - QA fix: resolved nested `<main>` tag on homepage, conditional `pb-16` only when mobile nav visible
-* [ ] **20b: Explore page mobile refinements** (todo)
-  - Switch suggestion grid to single-column stack on `< sm` breakpoints
-  - Increase tap target size on MoodFilter toggle buttons and BudgetFilter presets to ≥ 44px
-  - Make FilterBar horizontally scrollable on narrow screens instead of wrapping
-  - Ensure DateIdeaCard content doesn't overflow on small screens (truncate long titles/descriptions)
+* [x] **20b: Explore page mobile refinements** (done)
+  - Increased MoodFilter and BudgetFilter tap targets to `px-4 py-2.5` (>=44px) on mobile, compact at `sm:`
+  - Made filter rows horizontally scrollable on narrow screens with `overflow-x-auto` and edge-to-edge negative margins
+  - Tightened grid gap to `gap-4` on mobile (`sm:gap-6` desktop) in SuggestionsFeed
+  - Added `min-w-0`, `truncate`, and `max-w-[100px]` on interest badges to prevent card overflow
+  - Reduced card content padding to `p-3` on mobile, scaled title to `text-base`/`sm:text-lg`
 * [ ] **20c: Date idea detail page mobile layout** (todo)
   - Stack activity timeline vertically with full-width cards on mobile
   - Make SurpriseReveal spoiler button large and thumb-friendly
