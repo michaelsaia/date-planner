@@ -145,11 +145,13 @@
   - Added `<Toaster position="top-center" richColors closeButton />` to root layout
   - Wired toast notifications for: bookmark added/removed, profile saved, suggestion fetch errors
   - Replaced profile page inline error/success banners with toast calls
-* [ ] **21b: Skeleton loaders for all data-fetching views** (todo)
-  - Review existing skeleton in SuggestionsFeed; ensure it matches final card dimensions
-  - Add skeleton loader for DateIdeaDetail page (activity timeline, surprise section)
-  - Add skeleton loader for SavedDatesList
-  - Add skeleton for profile page data pre-population
+* [x] **21b: Skeleton loaders for all data-fetching views** (done)
+  - Created shared `SkeletonCard` component (`src/components/skeletons/SkeletonCard.tsx`) matching DateIdeaCard dimensions with activity preview lines and interest badge placeholders
+  - Created `ProfileSkeleton` component (`src/components/skeletons/ProfileSkeleton.tsx`) mirroring interests/budget/location sections
+  - Replaced inline SkeletonCard duplicates in SuggestionsFeed and SavedDatesList with shared import
+  - Replaced profile page "Loading..." text with full ProfileSkeleton
+  - DateIdeaDetail already had adequate DetailSkeleton (left as-is)
+  - QA fix: replaced Math.random() widths with deterministic values to prevent hydration mismatches
 * [ ] **21c: Error and empty state pages** (todo)
   - Create a custom `not-found.tsx` (404) page with illustration and "Go to Explore" CTA
   - Create a custom `error.tsx` (500) boundary with retry button
