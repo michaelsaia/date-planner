@@ -152,15 +152,16 @@
   - Replaced profile page "Loading..." text with full ProfileSkeleton
   - DateIdeaDetail already had adequate DetailSkeleton (left as-is)
   - QA fix: replaced Math.random() widths with deterministic values to prevent hydration mismatches
-* [ ] **21c: Error and empty state pages** (todo)
-  - Create a custom `not-found.tsx` (404) page with illustration and "Go to Explore" CTA
-  - Create a custom `error.tsx` (500) boundary with retry button
-  - Improve empty state on SavedDatesList (friendly copy + CTA to explore)
-  - Improve empty state on SuggestionsFeed when no ideas match filters (suggest clearing filters)
-* [ ] **21d: Form validation feedback** (todo)
-  - Add inline field-level error messages on AuthForm (email format, password length)
-  - Add inline validation to onboarding steps (e.g., "Select at least 3 interests")
-  - Show loading/disabled state on submit buttons during API calls to prevent double-submits
+* [x] **21c: Error and empty state pages** (done)
+  - [x] Create a custom `not-found.tsx` (404) page with illustration and "Go to Explore" CTA
+  - [x] Create a custom `error.tsx` (500) boundary with retry button
+  - [x] Improve empty state on SavedDatesList (friendly copy + CTA to explore)
+  - [x] Improve empty state on SuggestionsFeed when no ideas match filters (suggest clearing filters)
+* [x] **21d: Form validation feedback** (done)
+  - [x] Inline field-level error messages on AuthForm (email format, password length) with `onBlur` touched tracking
+  - [x] Inline validation on InterestsStep with `showValidation` prop and `role="alert"` for accessibility
+  - [x] Onboarding Next button triggers validation feedback via `attemptedAdvance` state
+  - [x] Loading/disabled state on all submit buttons (AuthForm, onboarding, profile) to prevent double-submits
 
 ### Task 22: Visual Polish, Animations & Branding
 * [ ] **22a: Logo, favicon & meta tags** (todo)
@@ -203,7 +204,12 @@
   - Audit API routes for input validation and auth checks
   - Rate-limit external API calls (Google Maps)
   - Optimize images, bundle size, and database queries
-* [ ] **Task 26: Deploy to production** (todo)
-  - Set up hosting (Vercel for frontend, managed PostgreSQL)
-  - Configure production environment variables and secrets
-  - Set up monitoring/logging (error tracking, basic analytics for success metrics)
+* [ ] **Task 26: Vercel Deployment** (todo)
+  - [ ] **26a: Deploy Preview to Vercel**
+    - User has connected the Vercel GitHub app.
+    - Trigger a preview deployment to test the pipeline.
+    - Verify the deployment is successful and the app is functional.
+  - [ ] **26b: Final Production Deployment**
+    - Set up production hosting (Vercel for frontend, managed PostgreSQL)
+    - Configure production environment variables and secrets
+    - Set up monitoring/logging (error tracking, basic analytics for success metrics)
