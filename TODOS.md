@@ -125,11 +125,12 @@
   - Sticky bottom CTA bar with title, cost, and BookmarkButton on mobile (`sm:hidden`), with `backdrop-blur-sm`
   - Hero banner and title scaled down on mobile (`h-40`/`text-xl` vs `h-56`/`text-3xl`)
   - Detail page wrapper adds `pb-24` on mobile to clear sticky bar, `pb-8` on desktop
-* [ ] **20d: Onboarding flow mobile UX** (todo)
-  - Ensure InterestsStep pill/chip buttons wrap cleanly and have adequate spacing on small screens
-  - Make BudgetStep slider/presets thumb-friendly with larger hit areas
-  - Test LocationStep geolocation prompt and input field on mobile browsers (Safari, Chrome)
-  - Verify progress bar is visible and doesn't crowd the header on short viewports
+* [x] **20d: Onboarding flow mobile UX** (done)
+  - InterestsStep: pill buttons get `min-h-[44px]` tap targets with `py-2.5` on mobile, wider `gap-2.5` spacing
+  - BudgetStep: preset buttons get `min-h-[44px]`, range sliders enlarged to `h-6` with `touch-pan-x` for smooth dragging
+  - LocationStep: input uses `text-base` (16px) to prevent iOS auto-zoom, detect button gets `min-h-[44px]`
+  - Onboarding page: reduced mobile padding (`px-4 py-6`), Back/Next buttons get `min-h-[44px]`, progress bar margin tightened
+  - QA fix: cleaned up redundant Tailwind classes in InterestsStep and BudgetStep
 * [ ] **20e: Auth & profile pages mobile polish** (todo)
   - Center AuthForm card vertically on mobile with proper padding
   - Ensure profile editing form inputs are full-width on mobile with adequate font size (≥ 16px to prevent iOS zoom)
