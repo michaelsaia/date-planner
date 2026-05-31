@@ -131,10 +131,13 @@
   - LocationStep: input uses `text-base` (16px) to prevent iOS auto-zoom, detect button gets `min-h-[44px]`
   - Onboarding page: reduced mobile padding (`px-4 py-6`), Back/Next buttons get `min-h-[44px]`, progress bar margin tightened
   - QA fix: cleaned up redundant Tailwind classes in InterestsStep and BudgetStep
-* [ ] **20e: Auth & profile pages mobile polish** (todo)
-  - Center AuthForm card vertically on mobile with proper padding
-  - Ensure profile editing form inputs are full-width on mobile with adequate font size (≥ 16px to prevent iOS zoom)
-  - Add `inputmode` attributes to numeric fields (budget) for correct mobile keyboard
+* [x] **20e: Auth & profile pages mobile polish** (done)
+  - AuthForm: reduced mobile padding (`px-4 py-8`/`sm:px-6 sm:py-12`), heading scaled `text-2xl`/`sm:text-3xl`
+  - Inputs use `text-base` (16px) on mobile to prevent iOS auto-zoom, `py-2.5` for touch targets
+  - Added `inputMode="email"` on email input for correct mobile keyboard
+  - Submit button gets `min-h-[44px]` and `py-3 sm:py-2.5` for WCAG tap target compliance
+  - Profile page: mobile padding reduced, buttons stack vertically (`flex-col sm:flex-row`) with `min-h-[44px]`
+  - BudgetStep uses range sliders (not numeric inputs), so `inputmode` not applicable
 
 ### Task 21: Loading States, Error Handling & Feedback
 * [ ] **21a: Install and configure toast notification system** (todo)
