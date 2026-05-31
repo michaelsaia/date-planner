@@ -118,11 +118,13 @@
   - Tightened grid gap to `gap-4` on mobile (`sm:gap-6` desktop) in SuggestionsFeed
   - Added `min-w-0`, `truncate`, and `max-w-[100px]` on interest badges to prevent card overflow
   - Reduced card content padding to `p-3` on mobile, scaled title to `text-base`/`sm:text-lg`
-* [ ] **20c: Date idea detail page mobile layout** (todo)
-  - Stack activity timeline vertically with full-width cards on mobile
-  - Make SurpriseReveal spoiler button large and thumb-friendly
-  - Ensure any embedded map iframe is responsive (`w-full aspect-video`) and doesn't break scroll
-  - Add a sticky bottom CTA bar with bookmark action on mobile detail view
+* [x] **20c: Date idea detail page mobile layout** (done)
+  - Activity timeline steps render inside bordered cards (`rounded-lg border bg-card`) on mobile, transparent on `sm:`+
+  - SurpriseReveal button full-width with `px-5 py-3` (44px+) on mobile, compact on desktop
+  - "Get another" refresh button has larger tap target on mobile (`px-3 py-1.5`)
+  - Sticky bottom CTA bar with title, cost, and BookmarkButton on mobile (`sm:hidden`), with `backdrop-blur-sm`
+  - Hero banner and title scaled down on mobile (`h-40`/`text-xl` vs `h-56`/`text-3xl`)
+  - Detail page wrapper adds `pb-24` on mobile to clear sticky bar, `pb-8` on desktop
 * [ ] **20d: Onboarding flow mobile UX** (todo)
   - Ensure InterestsStep pill/chip buttons wrap cleanly and have adequate spacing on small screens
   - Make BudgetStep slider/presets thumb-friendly with larger hit areas
