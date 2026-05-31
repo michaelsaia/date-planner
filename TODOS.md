@@ -140,10 +140,11 @@
   - BudgetStep uses range sliders (not numeric inputs), so `inputmode` not applicable
 
 ### Task 21: Loading States, Error Handling & Feedback
-* [ ] **21a: Install and configure toast notification system** (todo)
-  - Add `sonner` (lightweight toast library) as a dependency
-  - Add `<Toaster />` to root layout
-  - Wire toast notifications for: bookmark added/removed, profile saved, suggestion refresh, errors
+* [x] **21a: Install and configure toast notification system** (done)
+  - Added `sonner` (^2.0.7) as a production dependency
+  - Added `<Toaster position="top-center" richColors closeButton />` to root layout
+  - Wired toast notifications for: bookmark added/removed, profile saved, suggestion fetch errors
+  - Replaced profile page inline error/success banners with toast calls
 * [ ] **21b: Skeleton loaders for all data-fetching views** (todo)
   - Review existing skeleton in SuggestionsFeed; ensure it matches final card dimensions
   - Add skeleton loader for DateIdeaDetail page (activity timeline, surprise section)
