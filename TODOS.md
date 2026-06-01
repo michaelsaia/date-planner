@@ -169,10 +169,13 @@
   - Generated favicon set: `icon.svg` (SVG favicon), `apple-icon.tsx` (180x180 via next/og), `opengraph-image.tsx` (1200x630 via next/og)
   - Added Open Graph and Twitter meta tags to root layout with `title.template: "%s | Date Planner"`
   - Set `<title>` and `<meta description>` on all 7 page routes via layout files and page metadata exports
-* [ ] **22b: Typography & spacing consistency pass** (todo)
-  - Audit heading hierarchy across all pages (consistent h1/h2/h3 sizing)
-  - Standardize card padding, gap, and margin spacing using Tailwind spacing scale
-  - Ensure consistent font weights and text color usage (foreground vs muted)
+* [x] **22b: Typography & spacing consistency pass** (done)
+  - Added `--destructive` CSS variables (light/dark) for semantic error colors across all error states
+  - Fixed `bg-white` hardcoding in MoodFilter, BudgetFilter, BookmarkButton for dark mode support
+  - Standardized heading hierarchy: detail h1 `text-2xl sm:text-3xl`, FilterBar `h2` to `span`
+  - Fixed inverted responsive gaps in InterestsStep and BudgetStep (`gap-2 sm:gap-2.5`)
+  - Standardized grid gaps across SavedDatesList to match SuggestionsFeed (`gap-4 sm:gap-6`)
+  - Normalized text colors: `text-foreground/80` to `text-muted`, `text-muted/60` to `text-muted opacity-60`
 * [ ] **22c: Micro-interactions & animations** (todo)
   - Add CSS transition on DateIdeaCard hover (subtle lift/shadow, scale)
   - Animate BookmarkButton heart icon on toggle (fill animation or pulse)

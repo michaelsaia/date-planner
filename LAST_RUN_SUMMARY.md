@@ -1,62 +1,70 @@
 # Workflow Run Summary
 
 **Project:** Date Planner
-**Status:** failed
-**Cost:** $10.45
-**Duration:** 974s
-**Time:** 2026-05-31 23:03:36
+**Status:** completed
+**Cost:** $10.21
+**Duration:** 830s
+**Time:** 2026-06-01 01:03:20
 
 ## Steps
 
-- **check-phase**: Looking at the project state:
+- **check-phase**: Based on my review of the project state:
 
-- **Last completed:** Task 21d (Form validation feedback) — all of Task 21 is done
-- **Next up:** Task 22a (Logo, favicon & meta tags) — still within Phase 7: Polish, Mobile Responsiveness & UX
-- **Phase 7** is ongoing — Tasks 20 and 21 are complete, but Task 22 (subtasks a-e) remains
+- **Phases 1-6**: All complete
+- **Phase 7** (Polish, Mobile Responsiveness & UX): In progress
+  - Task 20 (a-e): Done
+  - Task 21 (a-d): Done  
+  - Task 22a: Done (last session - logo, favicon & meta tags)
+  - Task 22b-22e: Still todo
+- **Phase 8**: Not started
 
-This is **not** a new phase — we're continuing Phase 7, moving from Task 21 to Task 22.
+The project is continuing within **Phase 7**, working through Task 22 (Visual Polish, Animations & Branding). The last completed task was 22a, and the next tasks are 22b through 22e. This is ... ($0.23, 38s)
+- **implement**: ## Summary — Task 22b: Typography & spacing consistency pass
 
-CONDITION_RESULT: NO ($0.11, 15s)
-- **implement**: **Task 22a: Logo, favicon & meta tags — completed.** Here's what was done:
+**Changes across 10 files:**
 
-**Files created:**
-- `src/components/Logo.tsx` — SVG logo component (calendar with heart motif), uses theme `text-primary` color, configurable `size` prop
-- `src/app/icon.svg` — SVG favicon (replaces old default `favicon.ico`)
-- `src/app/apple-icon.tsx` — Dynamic 180x180 Apple touch icon using `next/og` ImageResponse (inverted colors: white logo on rose background)
-- `src/app/opengraph-image.tsx` — 1200x630 ... ($0.98, 181s)
-- **qa**: **STATUS: DONE**
+### CSS Design System (`globals.css`)
+- Added `--destructive`, `--destructive-light`, `--destructive-border` CSS variables with both light and dark mode values
+- Registered them in `@theme inline` so Tailwind can use `text-destructive`, `bg-destructive-light`, `border-destructive-border`
 
-**QA Summary for Task 22a (Logo, favicon & meta tags):**
+### Dark Mode Fixes (3 files)
+- **MoodFilter**: `bg-white` → `bg-card` on inactive mood buttons (5 moods)
+- **B... ($2.58, 372s)
+- **ship**: ## /ship Completion Report
 
-- **0 issues found** across 14 changed files
-- Code review covered all new and modified files: Logo component, favicon SVG, apple-icon, OG image, root layout metadata, 4 route layout files, 3 page metadata updates, and DesktopNav update
-- Browser tested landing page on desktop (1280x720) and mobile (375x812) via preview server -- renders correctly, 0 console errors
-- Health score: **96/100** (limited by preview server... ($2.92, 345s)
-- **ship**: **STATUS: DONE**
+**STATUS: DONE**
 
-**/ship completion report:**
+**What shipped:**
+- Commit `798ba41` pushed to `origin/main` on `michaelsaia/date-planner`
+- Task 22b: Typography & spacing consistency pass (13 files changed, +34/-25 lines)
 
-- **What shipped:** Task 22a (logo, favicon, OG images, per-page meta tags) -- 14 files changed across the `app` submodule
-- **Pushed:** `d8e4472` to `origin/main` on GitHub (`michaelsaia/date-planner`)
-- **Pre-landing review:** 0 issues found -- all changes are metadata, SVG assets, and layout files with no security/data concerns
-- **Tests:** Skipped -- vitest and TypeScript not fully installed (OOM environment constraint, pre-existing)
-- **PR:... ($2.78, 201s)
-- **write-notes**: Session note written to `notes/2026-05-31-2301-summary.md` covering Task 22a implementation: logo component, favicon, apple-touch-icon, OG image, root metadata with title template, per-page metadata for all 7 routes, QA results (0 issues), design decisions, and environment constraints. ($0.96, 48s)
-- **update-todos**: Updated `TODOS.md` — marked Task 22a as `[x]` (done) with updated sub-items reflecting what was actually built (Logo component, SVG favicon, next/og apple-icon and OG image, title template pattern, 7 route metadata exports). ($0.91, 18s)
-- **file-needs**: No new needs to file. Task 22a (logo, favicon, meta tags) introduced no new blockers -- all changes are self-contained SVG assets, metadata configuration, and layout files that don't depend on any external services or credentials. The existing Google Maps API key need in NEEDS.md remains the only blocker (for Task 13), and it's already well-documented. ($0.91, 14s)
-- **sync-progress**: **Progress summary:**
+**Changes reviewed and pushed:**
+- Added `--destructive` CSS variables with light/dark mode support for semantic error colors
+- Fixed `bg-white` hardcoding in MoodFilter, BudgetFilter, BookmarkButton (dark mode fix)
+- Standardized heading hierarchy (detail h1 sizing, FilterB... ($2.90, 146s)
+- **write-notes**: Wrote session note to `notes/2026-06-01-0101-summary.md` covering Task 22b completion: 13 files changed across CSS design system (destructive color variables), dark mode fixes, heading hierarchy, error state consistency, spacing fixes, and text color normalization. No blockers for this task. ($1.14, 41s)
+- **update-todos**: Updated `TODOS.md`: marked Task 22b as `[x]` (done) with detailed sub-items reflecting the actual implementation. All other task statuses remain unchanged - Tasks 22c-22e are `[ ]` (todo), Task 13 is `[!]` (blocked), and Phase 8 tasks are `[ ]` (todo). ($1.16, 26s)
+- **file-needs**: The existing NEEDS.md already covers the only current blocker (Google Maps API key for Task 13). Let me verify there are no new blockers from my session.
 
-| Status | Count | Tasks |
-|--------|-------|-------|
-| Done `[x]` | 24 | Tasks 1-12, 14-22a (including all 20a-e, 21a-d subtasks) |
-| Blocked `[!]` | 1 | Task 13 (Google Maps API key) |
-| Todo `[ ]` | 8 | Tasks 22b-e, 23, 24, 25, 26 |
-| **Total** | **33** | |
+Reviewing the current state:
+- Task 22b just completed - no blockers
+- Tasks 22c-22e are todo but not blocked on anything external
+- Phase 8 tasks (23-26) are todo but not blocked on external needs
+- Task 13 remains the only blocked task, and the existing NEEDS.md entry covers it correctly
 
-**Completion: 24/33 (73%)**
+The NEEDS.md is already accurate and complete. No ... ($1.08, 10s)
+- **sync-progress**: Now let me count the top-level tasks:
 
-**Current phase:** Phase 7 (Polish, Mobile Responsiveness & UX) — Task 22, subtask b is next.
+**Completed `[x]`:** Tasks 1-12, 14-22b (20a-e, 21a-d, 22a-b) = 28 tasks done
+**Blocked `[!]`:** Task 13 = 1 task blocked
+**Todo `[ ]`:** Tasks 22c, 22d, 22e, 23, 24, 25, 26 = 7 tasks remaining
 
-**Phases 1-6:** Fully complete (except Task 13 blocked on API key).
-**Phase 7:** 11/15... ($0.88, 19s)
+**Total top-level tasks:** 36
+**Current phase:** Phase 7 (Polish, Mobile Responsiveness & UX), working through Task 22 (Visual Polish)
+
+## Progress Summary
+
+- **28 of 36 tasks complete (78%)**
+- **1 blocked** (Task 13: Google Maps API - awaiting API key)
+- **7 re... ($1.12, 20s)
 
