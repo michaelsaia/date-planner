@@ -164,11 +164,11 @@
   - [x] Loading/disabled state on all submit buttons (AuthForm, onboarding, profile) to prevent double-submits
 
 ### Task 22: Visual Polish, Animations & Branding
-* [ ] **22a: Logo, favicon & meta tags** (todo)
-  - Design a simple logo mark (heart + calendar motif) and wordmark
-  - Generate favicon set (favicon.ico, apple-touch-icon, og-image)
-  - Add Open Graph and Twitter meta tags to root layout for link previews
-  - Set `<title>` and `<meta description>` on each page route
+* [x] **22a: Logo, favicon & meta tags** (done)
+  - Created SVG logo component (heart + calendar motif) in `src/components/Logo.tsx`, integrated into DesktopNav
+  - Generated favicon set: `icon.svg` (SVG favicon), `apple-icon.tsx` (180x180 via next/og), `opengraph-image.tsx` (1200x630 via next/og)
+  - Added Open Graph and Twitter meta tags to root layout with `title.template: "%s | Date Planner"`
+  - Set `<title>` and `<meta description>` on all 7 page routes via layout files and page metadata exports
 * [ ] **22b: Typography & spacing consistency pass** (todo)
   - Audit heading hierarchy across all pages (consistent h1/h2/h3 sizing)
   - Standardize card padding, gap, and margin spacing using Tailwind spacing scale
