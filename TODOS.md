@@ -191,13 +191,16 @@
   - Verified MoodBadge contrast ratios pass WCAG AA (>4.5:1 for all 5 moods)
   - Verified skeleton loaders, FilterBar, and all pages use semantic CSS variables
   - QA fix: added error handling to profile POST transaction
-* [ ] **22e: Accessibility (a11y) audit** (todo)
-  - Run axe or Lighthouse accessibility audit on all pages
-  - Ensure all interactive elements have visible focus rings (`:focus-visible` outlines)
-  - Add `aria-label` to icon-only buttons (BookmarkButton, nav icons)
-  - Verify color contrast ratios meet WCAG AA (especially muted text on card backgrounds)
-  - Add `role` and `aria-live` attributes to toast notifications and dynamic content regions
-  - Ensure onboarding and filter controls are fully keyboard-navigable
+* [x] **22e: Accessibility (a11y) audit** (done)
+  - Added global `:focus-visible` outlines (2px solid primary) to `globals.css` for keyboard navigation
+  - Added `aria-label` to icon-only buttons (BookmarkButton, DateIdeaCard, FilterBar, SuggestionsFeed refresh, SurpriseReveal, DateIdeaDetail back)
+  - Added `aria-hidden="true"` to decorative SVG icons (BookmarkButton, ActivityTimeline, RefreshIcon, ChevronLeftIcon)
+  - Added `aria-live="polite"` regions for dynamic content (SuggestionsFeed count, SurpriseReveal, SavedDatesList count, LocationStep coordinates)
+  - Added `role="alert"` to error states (SuggestionsFeed, DateIdeaDetail, SavedDatesList, AuthForm error banner, error boundary)
+  - Added `aria-current="page"` to DesktopNav active links
+  - Replaced `<div>/<label>` with `<fieldset>/<legend>` in MoodFilter and BudgetFilter with `role="group"` and `aria-label`
+  - Added `min-w-0` to fieldsets to prevent flex overflow
+  - QA: 3 issues found and fixed, health score 89 → 92
 
 ## Phase 8: Testing & Launch Prep
 * [ ] **Task 23: Write unit and integration tests** (todo)
