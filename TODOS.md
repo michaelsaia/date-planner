@@ -184,11 +184,13 @@
   - SurpriseReveal smooth expand animation + button scale transitions
   - Added `prefers-reduced-motion: reduce` media query for WCAG 2.1 AA compliance
   - QA: fixed timer memory leak, removed dead code, added missing transitions
-* [ ] **22d: Dark mode verification & refinement** (todo)
-  - Test every page in dark mode; fix any hardcoded colors that don't respect CSS variables
-  - Ensure MoodBadge color variants have adequate contrast in dark mode
-  - Verify skeleton loader shimmer effect works in both light and dark themes
-  - Check FilterBar selected/unselected states are clearly distinguishable in dark mode
+* [x] **22d: Dark mode verification & refinement** (done)
+  - Fixed Logo hardcoded `fill="white"` to use `text-card` CSS variable
+  - Added `dark:` variants to MoodBadge (5 moods), MoodFilter (active/inactive), BookmarkButton (bookmarked state)
+  - Added range input track styling using `var(--border)` for dark mode
+  - Verified MoodBadge contrast ratios pass WCAG AA (>4.5:1 for all 5 moods)
+  - Verified skeleton loaders, FilterBar, and all pages use semantic CSS variables
+  - QA fix: added error handling to profile POST transaction
 * [ ] **22e: Accessibility (a11y) audit** (todo)
   - Run axe or Lighthouse accessibility audit on all pages
   - Ensure all interactive elements have visible focus rings (`:focus-visible` outlines)

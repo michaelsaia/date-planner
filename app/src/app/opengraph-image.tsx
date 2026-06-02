@@ -1,0 +1,80 @@
+import { ImageResponse } from "next/og";
+
+export const alt = "Date Planner — Creative date nights, personalized for you";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+
+export default function OgImage() {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "linear-gradient(135deg, #faf7f5 0%, #fecdd3 100%)",
+          fontFamily: "system-ui, sans-serif",
+        }}
+      >
+        {/* Logo icon */}
+        <svg
+          width="96"
+          height="96"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="3" y="6" width="26" height="23" rx="4" fill="#e11d48" />
+          <rect x="3" y="6" width="26" height="8" rx="4" fill="#e11d48" />
+          <rect
+            x="9"
+            y="3"
+            width="2.5"
+            height="6"
+            rx="1.25"
+            fill="#e11d48"
+          />
+          <rect
+            x="20.5"
+            y="3"
+            width="2.5"
+            height="6"
+            rx="1.25"
+            fill="#e11d48"
+          />
+          <rect x="5" y="14" width="22" height="13" rx="2" fill="white" />
+          <path
+            d="M16 25.5l-1.1-1C11.1 21.2 9 19.3 9 17c0-1.9 1.5-3.4 3.4-3.4 1.1 0 2.1.5 2.8 1.3.6-.8 1.6-1.3 2.8-1.3 1.9 0 3.4 1.5 3.4 3.4 0 2.3-2.1 4.2-5.9 7.5L16 25.5z"
+            fill="#e11d48"
+          />
+        </svg>
+        <div
+          style={{
+            marginTop: 32,
+            fontSize: 64,
+            fontWeight: 700,
+            color: "#1c1917",
+            letterSpacing: "-0.02em",
+          }}
+        >
+          Date Planner
+        </div>
+        <div
+          style={{
+            marginTop: 16,
+            fontSize: 28,
+            color: "#78716c",
+            maxWidth: 700,
+            textAlign: "center",
+          }}
+        >
+          Creative date nights, personalized for you
+        </div>
+      </div>
+    ),
+    { ...size }
+  );
+}

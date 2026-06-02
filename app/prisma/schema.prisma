@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ─── Task 5: User/Couple Profile ───
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  profile   Profile?
+  interests UserInterest[]
+  bookmarks Bookmark[]
+}
+
+model Profile {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  homeLat      Float?
+  homeLng      Float?
+  homeLabel    String?
+  budgetMin    Int      @default(0)
+  budgetMax    Int      @default(100)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ─── Task 6: Interests & Preferences ───
+
+model Interest {
+  id       String @id @default(cuid())
+  name     String @unique
+  category String
+
+  users     UserInterest[]
+  dateIdeas DateIdeaInterest[]
+}
+
+model UserInterest {
+  userId     String
+  interestId String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  interest Interest @relation(fields: [interestId], references: [id], onDelete: Cascade)
+
+  @@id([userId, interestId])
+}
+
+// ─── Task 7: Date Ideas ───
+
+model DateIdea {
+  id              String  @id @default(cuid())
+  title           String
+  description     String
+  mood            String
+  estimatedCost   Int
+  surprise        String?
+  imageUrl        String?
+
+  activities DateIdeaActivity[]
+  bookmarks  Bookmark[]
+  interests  DateIdeaInterest[]
+}
+
+model DateIdeaInterest {
+  dateIdeaId String
+  interestId String
+
+  dateIdea DateIdea @relation(fields: [dateIdeaId], references: [id], onDelete: Cascade)
+  interest Interest @relation(fields: [interestId], references: [id], onDelete: Cascade)
+
+  @@id([dateIdeaId, interestId])
+  @@index([interestId])
+}
+
+model DateIdeaActivity {
+  id         String  @id @default(cuid())
+  dateIdeaId String
+  name       String
+  venueName  String
+  venueUrl   String?
+  mapsUrl    String?
+  order      Int
+
+  dateIdea DateIdea @relation(fields: [dateIdeaId], references: [id], onDelete: Cascade)
+
+  @@index([dateIdeaId])
+}
+
+// ─── Task 8: Bookmarks ───
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  dateIdeaId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dateIdea DateIdea @relation(fields: [dateIdeaId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateIdeaId])
+  @@index([userId])
+}

@@ -2,72 +2,58 @@
 
 **Project:** Date Planner
 **Status:** completed
-**Cost:** $11.39
-**Duration:** 1360s
-**Time:** 2026-06-01 03:57:33
+**Cost:** $13.14
+**Duration:** 1238s
+**Time:** 2026-06-02 01:30:37
 
 ## Steps
 
-- **check-phase**: The API endpoint is returning 404. Let me evaluate the project state from what's available locally — the TODO list provided in the prompt and the git history.
+- **check-phase**: Based on my analysis of the project state:
 
-Based on the TODO list provided:
-- **Phases 1-6**: All complete
-- **Phase 7 (Polish)**: Tasks 20a-20e done, 21a-21d done, 22a-22b done. Tasks **22c, 22d, 22e** are still todo.
-- **Phase 8 (Testing & Launch)**: Tasks 23-26 all todo.
+**Current status:** The project is in **Phase 7: Polish, Mobile Responsiveness & UX**. Tasks 22a, 22b, and 22c are complete. The next tasks are **22d** (Dark mode verification) and **22e** (Accessibility audit), both still in Phase 7.
 
-The last completed task was **22b** (typography & spacing consistency pass). The next task is **22c** ... ($0.16, 24s)
-- **implement**: All 42 tests pass. Here's a summary of what was implemented for **Task 22c: Micro-interactions & animations**:
+**Is this a new phase?** No. The project is continuing in Phase 7. The last completed task was 22c (micro-interactions & animations), and the next tasks (22d, 22e) are still within the same Phase 7. Phase 8 (Testing &... ($0.22, 30s)
+- **implement**: Dev server is already running and responding with 200. Build passes, 42/42 tests pass, app is running.
 
-1. **`globals.css`** — Added 4 CSS keyframe animations:
-   - `card-fade-in`: staggered fade-up entrance for cards
-   - `heart-pulse`: scale bounce on bookmark toggle
-   - `surprise-reveal`: expand + fade for spoiler content
+**Summary of Task 22d — Dark mode verification & refinement:**
 
-2. **`DateIdeaCard.tsx`** — Added `hover:-translate-y-1` and `transition-all duration-200` for a subtle lift effect on hover
+Changes made across 5 files:
 
-3. **`BookmarkButton.tsx`** ��... ($1.29, 351s)
-- **qa**: ---
+1. **`Logo.tsx`**: Changed hardcoded `fill="white"` to `fill="currentColor" className="text-card"` so the calendar body adapts to dark mode (uses `--card` variable: white in light, `#292524` in dark)
 
-**QA Summary — STATUS: DONE**
+2. **`globals.css`**: Added range input track styling using `var(--border)` so slider tracks ada... ($1.47, 259s)
+- **qa**: **QA Summary:**
 
-QA found and fixed 3 issues in the Task 22c animations work:
+- **Tested:** All 7 page routes (200 OK), all 8 API endpoints, full auth flow (signup → login → session), profile CRUD, suggestions with filters, bookmark toggle, surprise generation
+- **Found 2 issues:**
+  - **ISSUE-001 (High, fixed):** Profile POST returned empty 500 on invalid interest IDs due to unhandled Prisma transaction error. Fixed with try/catch, committed atomically.
+  - **ISSUE-002 (Low, deferred):** `homeLocation` field required in body even though nullable �... ($4.70, 585s)
+- **ship**: The `GITHUB_TOKEN` is invalid. The branch `feature/task-22d-dark-mode-and-qa` has been pushed to origin but the PR cannot be created programmatically.
 
-1. **Critical** — Added `prefers-reduced-motion: reduce` media query for all CSS animations (WCAG 2.1 AA compliance)
-2. **High** — Fixed timer memory leak in BookmarkButton by adding useEffect cleanup
-3. **Low** — Fixed missing `transition-all` on SurpriseReveal button scale transforms
+**Summary of /ship workflow execution:**
 
-Also removed dead `surprise-collapse` animation code. All 42 tests pass, build is clean, all routes res... ($3.11, 592s)
-- **ship**: ---
+1. **Pre-flight**: Created feature branch `feature/task-22d-dark-mode-and-qa` from main
+2. **Merge base**: Already up to date
+3. **Tests**: 42/42 passing
+4. **Coverage audit**: All changes are CSS/styling + one API error handler — no gaps
+5. **Pre-Landing Review**: No issues found (no SQL injection, ... ($2.78, 193s)
+- **write-notes**: Session note written to `notes/2026-06-02-0130-summary.md` covering Task 22d completion: dark mode fixes across 5 components, QA bug fix for profile POST error handling, ship workflow execution, decisions made, and current blockers (GitHub token expired, no browser for visual QA). ($0.91, 34s)
+- **update-todos**: Updated `TODOS.md` — marked Task 22d as `[x]` (done) with a summary of what was accomplished. All other task statuses remain unchanged (22e and Phase 8 tasks still `[ ]` todo, Task 13 still `[!]` blocked). ($1.16, 26s)
+- **file-needs**: The existing NEEDS.md already covers the Google Maps API key blocker. The only new blocker from this session is the GitHub token, but that's an infrastructure/platform issue (ShortestPath's own token), not something the user needs to provide. No new user-facing blockers to add.
 
-**Ship Summary — STATUS: DONE_WITH_CONCERNS**
-
-**What shipped:**
-- Branch `feature/task-22c-animations` pushed to `origin` with 2 commits:
-  - `c017a79` — Task 22c micro-interactions & animations (card fade-in, heart pulse, surprise reveal, hover lift)
-  - `8687d39` — QA fixes (prefers-reduced-motion, timer cleanup, transition fix)
-
-**What worked:**
-- All 42 tests pass
-- Build clean
-- Branch pushed to GitHub
-
-**Concern:**
-- PR creation failed — GitHub token (`GITHUB_TOKEN`) is in... ($2.66, 197s)
-- **write-notes**: Session note written to `notes/2026-06-01-0354-summary.md`. Covers Task 22c implementation, QA fixes, decisions, blockers (invalid GitHub token, no browser for visual QA), and next steps. ($1.11, 42s)
-- **update-todos**: Updated `TODOS.md` -- marked Task 22c as `[x]` (done) with detailed sub-items reflecting what was actually implemented, including the QA fixes. Tasks 22d, 22e, and Phase 8 remain as `[ ]` (todo). Task 13 stays `[!]` (blocked). ($1.06, 19s)
-- **file-needs**: The existing NEEDS.md already covers the only blocker (Task 13 - Google Maps API key). No new blockers were introduced in this session -- Task 22c completed successfully, and the GitHub auth issue is an infrastructure/environment concern, not a user-actionable blocker.
-
-No changes needed to NEEDS.md. The only active blocker remains the Google Maps API key for Task 13. ($0.98, 11s)
-- **sync-progress**: **Progress Summary:**
+No changes needed to `NEEDS.md`. The only blocker remains the Google Maps API key (Task 13), which was already documented. The GitHub token issue encountered during `/ship` is a platform-level concern, not a user-acti... ($0.94, 11s)
+- **sync-progress**: **Project Progress Summary:**
 
 | Status | Count | Tasks |
 |--------|-------|-------|
-| Done `[x]` | 27 | Tasks 1-12, 14-22c |
+| Done `[x]` | 27 | Tasks 1-12, 14-22d (all subtasks) |
 | Blocked `[!]` | 1 | Task 13 (Google Maps API key) |
-| Todo `[ ]` | 6 | Tasks 22d, 22e, 23, 24, 25, 26 |
-| **Total** | **34** | |
+| Todo `[ ]` | 5 | Tasks 22e, 23, 24, 25, 26 |
+| **Total** | **33** | |
 
-**Completion: 27/34 tasks done (79%)**
+**Completion: 27/33 tasks done (82%)**
 
-**Current phase: Phase 7** (Polish, Mobile Responsiveness & UX) -- 2 tasks remaining (22d dark mode, 22e accessibility). Phase 8 (Testing & Launch Prep) has 4 tasks remaining. ($1.02, 16s)
+**Current phase:** Phase 7 (Polish, Mobile Responsiveness & UX) — nearly complete, one subtask remaining (22e: Accessibility audit). Phase 8 (Testing & Launch Prep) has not started yet.
+
+... ($0.97, 12s)
 
