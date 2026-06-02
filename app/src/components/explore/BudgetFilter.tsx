@@ -28,7 +28,7 @@ export default function BudgetFilter({
   const hasSelection = selectedMin !== undefined || selectedMax !== undefined;
 
   return (
-    <fieldset className="border-0 p-0 m-0">
+    <fieldset className="border-0 p-0 m-0 min-w-0">
       <legend className="mb-2 block text-xs font-medium uppercase tracking-wide text-muted">
         Budget
       </legend>

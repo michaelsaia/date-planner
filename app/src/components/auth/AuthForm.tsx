@@ -69,7 +69,7 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
       <div className="mx-auto mt-6 sm:mt-8 w-full max-w-sm">
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
-            <div className="rounded-lg border border-destructive-border bg-destructive-light px-4 py-3 text-sm text-destructive">
+            <div role="alert" className="rounded-lg border border-destructive-border bg-destructive-light px-4 py-3 text-sm text-destructive">
               {error}
             </div>
           )}
