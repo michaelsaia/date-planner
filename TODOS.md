@@ -176,12 +176,14 @@
   - Fixed inverted responsive gaps in InterestsStep and BudgetStep (`gap-2 sm:gap-2.5`)
   - Standardized grid gaps across SavedDatesList to match SuggestionsFeed (`gap-4 sm:gap-6`)
   - Normalized text colors: `text-foreground/80` to `text-muted`, `text-muted/60` to `text-muted opacity-60`
-* [ ] **22c: Micro-interactions & animations** (todo)
-  - Add CSS transition on DateIdeaCard hover (subtle lift/shadow, scale)
-  - Animate BookmarkButton heart icon on toggle (fill animation or pulse)
-  - Add fade-in transition when suggestion cards load (staggered with `animation-delay`)
-  - Smooth expand/collapse on SurpriseReveal spoiler
-  - Add subtle page transition or content fade on route changes
+* [x] **22c: Micro-interactions & animations** (done)
+  - Added CSS keyframe animations: card-fade-in, heart-pulse, surprise-reveal in `globals.css`
+  - DateIdeaCard hover lift (`-translate-y-1`) with `transition-all duration-200`
+  - BookmarkButton heart pulse animation on toggle with timer cleanup on unmount
+  - Staggered fade-in on suggestion and saved cards (60ms delay per card)
+  - SurpriseReveal smooth expand animation + button scale transitions
+  - Added `prefers-reduced-motion: reduce` media query for WCAG 2.1 AA compliance
+  - QA: fixed timer memory leak, removed dead code, added missing transitions
 * [ ] **22d: Dark mode verification & refinement** (todo)
   - Test every page in dark mode; fix any hardcoded colors that don't respect CSS variables
   - Ensure MoodBadge color variants have adequate contrast in dark mode

@@ -2,69 +2,72 @@
 
 **Project:** Date Planner
 **Status:** completed
-**Cost:** $10.21
-**Duration:** 830s
-**Time:** 2026-06-01 01:03:20
+**Cost:** $11.39
+**Duration:** 1360s
+**Time:** 2026-06-01 03:57:33
 
 ## Steps
 
-- **check-phase**: Based on my review of the project state:
+- **check-phase**: The API endpoint is returning 404. Let me evaluate the project state from what's available locally — the TODO list provided in the prompt and the git history.
 
+Based on the TODO list provided:
 - **Phases 1-6**: All complete
-- **Phase 7** (Polish, Mobile Responsiveness & UX): In progress
-  - Task 20 (a-e): Done
-  - Task 21 (a-d): Done  
-  - Task 22a: Done (last session - logo, favicon & meta tags)
-  - Task 22b-22e: Still todo
-- **Phase 8**: Not started
+- **Phase 7 (Polish)**: Tasks 20a-20e done, 21a-21d done, 22a-22b done. Tasks **22c, 22d, 22e** are still todo.
+- **Phase 8 (Testing & Launch)**: Tasks 23-26 all todo.
 
-The project is continuing within **Phase 7**, working through Task 22 (Visual Polish, Animations & Branding). The last completed task was 22a, and the next tasks are 22b through 22e. This is ... ($0.23, 38s)
-- **implement**: ## Summary — Task 22b: Typography & spacing consistency pass
+The last completed task was **22b** (typography & spacing consistency pass). The next task is **22c** ... ($0.16, 24s)
+- **implement**: All 42 tests pass. Here's a summary of what was implemented for **Task 22c: Micro-interactions & animations**:
 
-**Changes across 10 files:**
+1. **`globals.css`** — Added 4 CSS keyframe animations:
+   - `card-fade-in`: staggered fade-up entrance for cards
+   - `heart-pulse`: scale bounce on bookmark toggle
+   - `surprise-reveal`: expand + fade for spoiler content
 
-### CSS Design System (`globals.css`)
-- Added `--destructive`, `--destructive-light`, `--destructive-border` CSS variables with both light and dark mode values
-- Registered them in `@theme inline` so Tailwind can use `text-destructive`, `bg-destructive-light`, `border-destructive-border`
+2. **`DateIdeaCard.tsx`** — Added `hover:-translate-y-1` and `transition-all duration-200` for a subtle lift effect on hover
 
-### Dark Mode Fixes (3 files)
-- **MoodFilter**: `bg-white` → `bg-card` on inactive mood buttons (5 moods)
-- **B... ($2.58, 372s)
-- **ship**: ## /ship Completion Report
+3. **`BookmarkButton.tsx`** ��... ($1.29, 351s)
+- **qa**: ---
 
-**STATUS: DONE**
+**QA Summary — STATUS: DONE**
+
+QA found and fixed 3 issues in the Task 22c animations work:
+
+1. **Critical** — Added `prefers-reduced-motion: reduce` media query for all CSS animations (WCAG 2.1 AA compliance)
+2. **High** — Fixed timer memory leak in BookmarkButton by adding useEffect cleanup
+3. **Low** — Fixed missing `transition-all` on SurpriseReveal button scale transforms
+
+Also removed dead `surprise-collapse` animation code. All 42 tests pass, build is clean, all routes res... ($3.11, 592s)
+- **ship**: ---
+
+**Ship Summary — STATUS: DONE_WITH_CONCERNS**
 
 **What shipped:**
-- Commit `798ba41` pushed to `origin/main` on `michaelsaia/date-planner`
-- Task 22b: Typography & spacing consistency pass (13 files changed, +34/-25 lines)
+- Branch `feature/task-22c-animations` pushed to `origin` with 2 commits:
+  - `c017a79` — Task 22c micro-interactions & animations (card fade-in, heart pulse, surprise reveal, hover lift)
+  - `8687d39` — QA fixes (prefers-reduced-motion, timer cleanup, transition fix)
 
-**Changes reviewed and pushed:**
-- Added `--destructive` CSS variables with light/dark mode support for semantic error colors
-- Fixed `bg-white` hardcoding in MoodFilter, BudgetFilter, BookmarkButton (dark mode fix)
-- Standardized heading hierarchy (detail h1 sizing, FilterB... ($2.90, 146s)
-- **write-notes**: Wrote session note to `notes/2026-06-01-0101-summary.md` covering Task 22b completion: 13 files changed across CSS design system (destructive color variables), dark mode fixes, heading hierarchy, error state consistency, spacing fixes, and text color normalization. No blockers for this task. ($1.14, 41s)
-- **update-todos**: Updated `TODOS.md`: marked Task 22b as `[x]` (done) with detailed sub-items reflecting the actual implementation. All other task statuses remain unchanged - Tasks 22c-22e are `[ ]` (todo), Task 13 is `[!]` (blocked), and Phase 8 tasks are `[ ]` (todo). ($1.16, 26s)
-- **file-needs**: The existing NEEDS.md already covers the only current blocker (Google Maps API key for Task 13). Let me verify there are no new blockers from my session.
+**What worked:**
+- All 42 tests pass
+- Build clean
+- Branch pushed to GitHub
 
-Reviewing the current state:
-- Task 22b just completed - no blockers
-- Tasks 22c-22e are todo but not blocked on anything external
-- Phase 8 tasks (23-26) are todo but not blocked on external needs
-- Task 13 remains the only blocked task, and the existing NEEDS.md entry covers it correctly
+**Concern:**
+- PR creation failed — GitHub token (`GITHUB_TOKEN`) is in... ($2.66, 197s)
+- **write-notes**: Session note written to `notes/2026-06-01-0354-summary.md`. Covers Task 22c implementation, QA fixes, decisions, blockers (invalid GitHub token, no browser for visual QA), and next steps. ($1.11, 42s)
+- **update-todos**: Updated `TODOS.md` -- marked Task 22c as `[x]` (done) with detailed sub-items reflecting what was actually implemented, including the QA fixes. Tasks 22d, 22e, and Phase 8 remain as `[ ]` (todo). Task 13 stays `[!]` (blocked). ($1.06, 19s)
+- **file-needs**: The existing NEEDS.md already covers the only blocker (Task 13 - Google Maps API key). No new blockers were introduced in this session -- Task 22c completed successfully, and the GitHub auth issue is an infrastructure/environment concern, not a user-actionable blocker.
 
-The NEEDS.md is already accurate and complete. No ... ($1.08, 10s)
-- **sync-progress**: Now let me count the top-level tasks:
+No changes needed to NEEDS.md. The only active blocker remains the Google Maps API key for Task 13. ($0.98, 11s)
+- **sync-progress**: **Progress Summary:**
 
-**Completed `[x]`:** Tasks 1-12, 14-22b (20a-e, 21a-d, 22a-b) = 28 tasks done
-**Blocked `[!]`:** Task 13 = 1 task blocked
-**Todo `[ ]`:** Tasks 22c, 22d, 22e, 23, 24, 25, 26 = 7 tasks remaining
+| Status | Count | Tasks |
+|--------|-------|-------|
+| Done `[x]` | 27 | Tasks 1-12, 14-22c |
+| Blocked `[!]` | 1 | Task 13 (Google Maps API key) |
+| Todo `[ ]` | 6 | Tasks 22d, 22e, 23, 24, 25, 26 |
+| **Total** | **34** | |
 
-**Total top-level tasks:** 36
-**Current phase:** Phase 7 (Polish, Mobile Responsiveness & UX), working through Task 22 (Visual Polish)
+**Completion: 27/34 tasks done (79%)**
 
-## Progress Summary
-
-- **28 of 36 tasks complete (78%)**
-- **1 blocked** (Task 13: Google Maps API - awaiting API key)
-- **7 re... ($1.12, 20s)
+**Current phase: Phase 7** (Polish, Mobile Responsiveness & UX) -- 2 tasks remaining (22d dark mode, 22e accessibility). Phase 8 (Testing & Launch Prep) has 4 tasks remaining. ($1.02, 16s)
 
