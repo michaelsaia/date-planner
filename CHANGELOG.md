@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.0.4] - 2026-06-03
+
+### Added
+- End-to-end test suite with Playwright (23 tests across 5 spec files)
+- E2E tests cover: authentication, onboarding, explore/browse, bookmarks, and full critical path
+- Shared E2E helpers for signup (UI and API-based), onboarding completion, and login
+- Playwright configuration with Chromium headless and auto-starting dev server
+- `npm run test:e2e` and `npm run test:e2e:headed` scripts
+
+### Fixed
+- Removed unused `signUp` import in auth E2E test (lint warning)
+
 ## [0.1.0.3] - 2026-06-02
 
 ### Added
