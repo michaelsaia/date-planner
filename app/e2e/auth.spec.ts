@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { uniqueEmail, signUp, logIn } from "./helpers";
+import { uniqueEmail, logIn } from "./helpers";
 
 test.describe("Authentication", () => {
   test("homepage shows Get Started and Sign In for unauthenticated users", async ({ page }) => {
