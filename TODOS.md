@@ -203,10 +203,12 @@
   - QA: 3 issues found and fixed, health score 89 → 92
 
 ## Phase 8: Testing & Launch Prep
-* [ ] **Task 23: Write unit and integration tests** (todo)
-  - Unit tests for suggestion algorithm scoring logic
-  - Integration tests for API routes (auth, bookmarks, suggestions)
-  - Component tests for key UI flows (onboarding, filtering)
+* [x] **Task 23: Write unit and integration tests** (done)
+  - 52 new tests added (94 total across 12 test files)
+  - API route integration tests: signup (5), bookmarks (10), profile (8), suggestions (7)
+  - Component tests: MoodFilter (5), BudgetFilter (7), MoodBadge (3), InterestsStep (7)
+  - QA fixes: malformed JSON handling in signup and profile endpoints (500 → 400)
+  - Infrastructure: moved test deps to regular deps for container compatibility, NODE_ENV=test for React 19
 * [ ] **Task 24: End-to-end testing** (todo)
   - E2E tests for critical paths: sign up → onboard → browse → bookmark
   - Test across Chrome, Firefox, Safari, and mobile browsers

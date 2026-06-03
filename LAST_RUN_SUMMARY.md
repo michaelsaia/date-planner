@@ -2,58 +2,89 @@
 
 **Project:** Date Planner
 **Status:** completed
-**Cost:** $13.14
-**Duration:** 1238s
-**Time:** 2026-06-02 01:30:37
+**Cost:** $25.46
+**Duration:** 2255s
+**Time:** 2026-06-02 19:06:52
 
 ## Steps
 
-- **check-phase**: Based on my analysis of the project state:
+- **check-phase**: Based on my analysis:
 
-**Current status:** The project is in **Phase 7: Polish, Mobile Responsiveness & UX**. Tasks 22a, 22b, and 22c are complete. The next tasks are **22d** (Dark mode verification) and **22e** (Accessibility audit), both still in Phase 7.
+- **Phase 7** (Polish, Mobile Responsiveness & UX) is fully complete — all tasks 20-22 are done per the latest session summary.
+- **Phase 8** (Testing & Launch Prep) is next — Tasks 23-26 are all still `todo`.
+- This means we are transitioning from Phase 7 to Phase 8, which constitutes a **new phase**.
 
-**Is this a new phase?** No. The project is continuing in Phase 7. The last completed task was 22c (micro-interactions & animations), and the next tasks (22d, 22e) are still within the same Phase 7. Phase 8 (Testing &... ($0.22, 30s)
-- **implement**: Dev server is already running and responding with 200. Build passes, 42/42 tests pass, app is running.
+The API returned empty phases/todos (the platform DB may not have them populated), but the TODO list in the prompt and the latest session notes both confirm Phase 7 ... ($0.23, 37s)
+- **review**: All 42 tests pass and TypeScript compiles cleanly. Here's the consolidated review:
 
-**Summary of Task 22d — Dark mode verification & refinement:**
+---
 
-Changes made across 5 files:
+## Code Review Summary
 
-1. **`Logo.tsx`**: Changed hardcoded `fill="white"` to `fill="currentColor" className="text-card"` so the calendar body adapts to dark mode (uses `--card` variable: white in light, `#292524` in dark)
+**Overall: Solid V1 codebase with good patterns. Key areas to address before launch.**
 
-2. **`globals.css`**: Added range input track styling using `var(--border)` so slider tracks ada... ($1.47, 259s)
-- **qa**: **QA Summary:**
+### What's Working Well
+- All 42 tests pass, TypeScript compiles clean
+- Prisma ORM used consistently — no raw SQL, no injection risk
+- Auth guards on all user-specific API routes
+- Good accessibility work (aria-labels, live regions, role=alert, focus-visible)
+- Proper optimistic UI with rollb... ($0.74, 116s)
+- **implement**: **Task 23 implemented.** Here's a summary:
 
-- **Tested:** All 7 page routes (200 OK), all 8 API endpoints, full auth flow (signup → login → session), profile CRUD, suggestions with filters, bookmark toggle, surprise generation
-- **Found 2 issues:**
-  - **ISSUE-001 (High, fixed):** Profile POST returned empty 500 on invalid interest IDs due to unhandled Prisma transaction error. Fixed with try/catch, committed atomically.
-  - **ISSUE-002 (Low, deferred):** `homeLocation` field required in body even though nullable �... ($4.70, 585s)
-- **ship**: The `GITHUB_TOKEN` is invalid. The branch `feature/task-22d-dark-mode-and-qa` has been pushed to origin but the PR cannot be created programmatically.
+### Tests Added (52 new tests, 94 total)
 
-**Summary of /ship workflow execution:**
+**API Route Integration Tests** (4 files, 30 tests):
+- `api/__tests__/signup.test.ts` — 5 tests: valid signup, invalid email, short password, duplicate email, missing fields
+- `api/__tests__/bookmarks.test.ts` — 10 tests: auth guards, toggle add/remove, invalid body/JSON, 404 for missing idea
+- `api/__tests__/profile.test.ts` — 8 tests: auth guards, valid save, null location, validation (empty interest... ($7.98, 1104s)
+- **qa**: **STATUS: DONE**
 
-1. **Pre-flight**: Created feature branch `feature/task-22d-dark-mode-and-qa` from main
-2. **Merge base**: Already up to date
-3. **Tests**: 42/42 passing
-4. **Coverage audit**: All changes are CSS/styling + one API error handler — no gaps
-5. **Pre-Landing Review**: No issues found (no SQL injection, ... ($2.78, 193s)
-- **write-notes**: Session note written to `notes/2026-06-02-0130-summary.md` covering Task 22d completion: dark mode fixes across 5 components, QA bug fix for profile POST error handling, ship workflow execution, decisions made, and current blockers (GitHub token expired, no browser for visual QA). ($0.91, 34s)
-- **update-todos**: Updated `TODOS.md` — marked Task 22d as `[x]` (done) with a summary of what was accomplished. All other task statuses remain unchanged (22e and Phase 8 tasks still `[ ]` todo, Task 13 still `[!]` blocked). ($1.16, 26s)
-- **file-needs**: The existing NEEDS.md already covers the Google Maps API key blocker. The only new blocker from this session is the GitHub token, but that's an infrastructure/platform issue (ShortestPath's own token), not something the user needs to provide. No new user-facing blockers to add.
+## QA Summary
 
-No changes needed to `NEEDS.md`. The only blocker remains the Google Maps API key (Task 13), which was already documented. The GitHub token issue encountered during `/ship` is a platform-level concern, not a user-acti... ($0.94, 11s)
-- **sync-progress**: **Project Progress Summary:**
+**Testing scope:** 15 API routes/pages tested via curl and source review. Browser-based visual testing was blocked by Chromium sandbox restrictions in the container.
 
-| Status | Count | Tasks |
-|--------|-------|-------|
-| Done `[x]` | 27 | Tasks 1-12, 14-22d (all subtasks) |
-| Blocked `[!]` | 1 | Task 13 (Google Maps API key) |
-| Todo `[ ]` | 5 | Tasks 22e, 23, 24, 25, 26 |
-| **Total** | **33** | |
+**Issues found: 2, both fixed and verified:**
 
-**Completion: 27/33 tasks done (82%)**
+1. **ISSUE-001** (High): `POST /api/auth/signup` returned 500 on malformed JSON. Fixed by adding try-catch around `request.json()`. Commit: `d861db8`
+2. **ISSUE-002** (High): `POST /api/profile` returned 500 on malformed JSON. Same fix pattern. Commi... ($6.32, 549s)
+- **ship**: **STATUS: DONE_WITH_CONCERNS**
 
-**Current phase:** Phase 7 (Polish, Mobile Responsiveness & UX) — nearly complete, one subtask remaining (22e: Accessibility audit). Phase 8 (Testing & Launch Prep) has not started yet.
+## Ship Summary
 
-... ($0.97, 12s)
+**Branch:** `feat/task-23-tests-and-qa-fixes` pushed to origin successfully.
+
+**Commits shipped (3):**
+1. `d861db8` — fix(qa): ISSUE-001 — handle malformed JSON in signup endpoint
+2. `ec2e97d` — fix(qa): ISSUE-002 — handle malformed JSON in profile endpoint
+3. `1660f90` — chore: bump version and changelog (v0.1.0.3)
+
+**Version:** 0.1.0.2 -> 0.1.0.3
+
+**Verification:**
+- 94/94 tests passing
+- TypeScript clean
+- Build successful
+
+**Conce... ($4.44, 207s)
+- **write-notes**: Session note written to `notes/2026-06-02-1905-summary.md`. Covers: Task 23 completion (52 new tests), 2 QA bug fixes, infrastructure changes for container compatibility, version bump to 0.1.0.3, and known blockers (gh auth, Chromium sandbox, NODE_ENV). ($1.40, 50s)
+- **update-todos**: Updated `TODOS.md`: marked Task 23 as `[x]` (done) with details on the 52 new tests, QA fixes, and infrastructure changes. Tasks 24-26 remain as `[ ]` (todo). All other phases unchanged. ($1.65, 37s)
+- **file-needs**: The existing NEEDS.md already covers the Google Maps API key blocker (Task 13). Let me check if there are any new blockers from this session that need to be added.
+
+Current blockers from this session:
+1. **Google Maps API Key** — already documented, still blocks Task 13
+2. **Chromium sandbox in container** — blocks browser-based E2E testing (Task 24), but this is an infrastructure limitation, not something the user can provide
+3. **GitHub CLI auth** — blocks auto-PR creation, but the us... ($1.34, 20s)
+- **sync-progress**: Here's the progress count:
+
+## Project Progress Summary
+
+| Phase | Tasks | Done | Blocked | Todo |
+|-------|-------|------|---------|------|
+| Phase 1: Project Setup & Infrastructure | 4 | 4 | 0 | 0 |
+| Phase 2: Data Modeling & Database Schema | 4 | 4 | 0 | 0 |
+| Phase 3: Authentication & Profile Onboarding | 3 | 3 | 0 | 0 |
+| Phase 4: Suggestion Engine | 3 | 2 | 1 | 0 |
+| Phase 5: Filtering, Categories & Browse UI | 3 | 3 | 0 | 0 |
+| Phase 6: Save & Bookmark System | 2 | 2 | 0 | 0 |
+| Phase ... ($1.37, 19s)
 
