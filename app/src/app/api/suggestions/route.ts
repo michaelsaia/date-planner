@@ -2,11 +2,23 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { getSuggestionsForUser } from "@/lib/suggestions";
 import { filterSchema } from "@/lib/validations";
+import { rateLimit } from "@/lib/rate-limit";
+
+// 30 suggestion requests per minute per user
+const SUGGESTIONS_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 30 };
 
 export async function GET(request: Request) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = rateLimit(`suggestions:${session.user.id}`, SUGGESTIONS_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429 },
+    );
   }
 
   // Parse optional query params for filters

@@ -209,9 +209,11 @@
   - Component tests: MoodFilter (5), BudgetFilter (7), MoodBadge (3), InterestsStep (7)
   - QA fixes: malformed JSON handling in signup and profile endpoints (500 → 400)
   - Infrastructure: moved test deps to regular deps for container compatibility, NODE_ENV=test for React 19
-* [ ] **Task 24: End-to-end testing** (todo)
-  - E2E tests for critical paths: sign up → onboard → browse → bookmark
-  - Test across Chrome, Firefox, Safari, and mobile browsers
+* [x] **Task 24: End-to-end testing** (done)
+  - 23 Playwright E2E tests across 5 spec files (auth, onboarding, explore, bookmarks, critical-path)
+  - Shared helpers: signUp (UI + API-based), completeOnboarding, signUpAndOnboard, logIn
+  - Playwright config with Chromium headless, auto-starting dev server, npm scripts
+  - Cross-browser testing deferred (container sandbox limits to Chromium headless only)
 * [ ] **Task 25: Performance and security review** (todo)
   - Audit API routes for input validation and auth checks
   - Rate-limit external API calls (Google Maps)

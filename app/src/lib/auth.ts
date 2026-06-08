@@ -19,10 +19,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const password = credentials.password as string;
 
         const user = await prisma.user.findUnique({ where: { email } });
-        if (!user) return null;
 
-        const valid = await bcrypt.compare(password, user.passwordHash);
-        if (!valid) return null;
+        // Always run bcrypt.compare to prevent timing-based user enumeration.
+        // The dummy hash is a valid bcrypt hash that will never match.
+        const dummyHash =
+          "$2a$12$000000000000000000000uGTWYJm1eY8E3WjO5L0qGJNqMTPG/xm";
+        const hashToCompare = user?.passwordHash ?? dummyHash;
+        const valid = await bcrypt.compare(password, hashToCompare);
+
+        if (!user || !valid) return null;
 
         return { id: user.id, email: user.email };
       },

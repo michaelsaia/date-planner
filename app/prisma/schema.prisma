@@ -69,6 +69,8 @@ model DateIdea {
   activities DateIdeaActivity[]
   bookmarks  Bookmark[]
   interests  DateIdeaInterest[]
+
+  @@index([mood])
 }
 
 model DateIdeaInterest {

@@ -2,89 +2,64 @@
 
 **Project:** Date Planner
 **Status:** completed
-**Cost:** $25.46
-**Duration:** 2255s
-**Time:** 2026-06-02 19:06:52
+**Cost:** $16.93
+**Duration:** 2645s
+**Time:** 2026-06-03 02:43:21
 
 ## Steps
 
-- **check-phase**: Based on my analysis:
+- **check-phase**: Based on my review:
 
-- **Phase 7** (Polish, Mobile Responsiveness & UX) is fully complete — all tasks 20-22 are done per the latest session summary.
-- **Phase 8** (Testing & Launch Prep) is next — Tasks 23-26 are all still `todo`.
-- This means we are transitioning from Phase 7 to Phase 8, which constitutes a **new phase**.
+- **Last session** completed Task 23 (unit and integration tests) in Phase 8.
+- **Current phase** is still Phase 8 (Testing & Launch Prep) — Tasks 24, 25, and 26 remain.
+- This is **not a new phase** — we're continuing Phase 8 from the previous session.
 
-The API returned empty phases/todos (the platform DB may not have them populated), but the TODO list in the prompt and the latest session notes both confirm Phase 7 ... ($0.23, 37s)
-- **review**: All 42 tests pass and TypeScript compiles cleanly. Here's the consolidated review:
+CONDITION_RESULT: NO ($0.22, 31s)
+- **implement**: **Summary of Task 24 implementation:**
 
----
+**E2E Testing with Playwright** — 23 tests across 5 files covering all critical user paths:
 
-## Code Review Summary
+| File | Tests | Coverage |
+|------|-------|----------|
+| `e2e/auth.spec.ts` | 7 | Signup, login, validation, duplicate email, page links |
+| `e2e/onboarding.spec.ts` | 3 | Full flow, back navigation, progress bar |
+| `e2e/explore.spec.ts` | 6 | Card loading, mood/budget filters, detail page, refresh, auth guard |
+| `e2e/bookmarks.spec.ts` | 4 | Toggle bookmar... ($3.63, 1909s)
+- **qa**: **QA Summary (DONE):**
 
-**Overall: Solid V1 codebase with good patterns. Key areas to address before launch.**
+- **Health score: 96/100** (up from 92 in previous session)
+- **117 tests passing** (94 unit + 23 E2E)
+- **API testing:** All 9 endpoints verified via curl - auth guards, validation, and error handling all working correctly
+- **E2E testing:** All 23 Playwright tests pass across auth, onboarding, explore, bookmark, and critical path flows
+- **Code quality:** TypeScript clean, build successful, 1 pre-existing lint warning (deferred)
+- **1 issue fixed:** Removed unused `s... ($3.27, 289s)
+- **ship**: **Ship Summary (DONE_WITH_CONCERNS):**
 
-### What's Working Well
-- All 42 tests pass, TypeScript compiles clean
-- Prisma ORM used consistently — no raw SQL, no injection risk
-- Auth guards on all user-specific API routes
-- Good accessibility work (aria-labels, live regions, role=alert, focus-visible)
-- Proper optimistic UI with rollb... ($0.74, 116s)
-- **implement**: **Task 23 implemented.** Here's a summary:
+**What shipped:**
+- Branch `feat/task-24-e2e-testing` pushed to origin with 2 commits:
+  1. `fix(qa): remove unused signUp import in auth E2E test`
+  2. `chore: bump version and changelog (v0.1.0.4)`
+- VERSION bumped from 0.1.0.3 to 0.1.0.4
+- CHANGELOG updated with Task 24 (E2E testing) entry
+- 117 tests passing (94 unit + 23 E2E)
+- TypeScript clean, lint clean, build passes
 
-### Tests Added (52 new tests, 94 total)
+**Concern:**
+- `gh pr create` fails with HTTP 401 (GitHub CLI auth invalid in ... ($4.24, 231s)
+- **write-notes**: Wrote session notes to `notes/2026-06-03-0240-summary.md` covering Task 24 completion: 23 E2E tests with Playwright, QA results (health score 96/100, 117 total tests), decisions made (Playwright choice, API-based signup helper, selector strategies), and blockers (GitHub CLI auth, Chromium sandbox). ($1.34, 30s)
+- **update-todos**: Updated `TODOS.md`: marked Task 24 (End-to-end testing) as `[x]` done with updated description reflecting the 23 Playwright E2E tests delivered. Tasks 25 and 26 remain as `[ ]` todo. ($1.47, 18s)
+- **file-needs**: The existing NEEDS.md already covers the only blocked item (Google Maps API key for Task 13). No new blockers were introduced by Task 24 -- the GitHub CLI auth issue and Chromium sandbox limitation are container environment constraints, not things the user can or needs to fix.
 
-**API Route Integration Tests** (4 files, 30 tests):
-- `api/__tests__/signup.test.ts` — 5 tests: valid signup, invalid email, short password, duplicate email, missing fields
-- `api/__tests__/bookmarks.test.ts` — 10 tests: auth guards, toggle add/remove, invalid body/JSON, 404 for missing idea
-- `api/__tests__/profile.test.ts` — 8 tests: auth guards, valid save, null location, validation (empty interest... ($7.98, 1104s)
-- **qa**: **STATUS: DONE**
+No changes needed to NEEDS.md. The only blocked task remains Task 13 (Google Maps API key), which is already documented with clear step-by-step instructions. ($1.36, 11s)
+- **sync-progress**: **Progress summary:**
 
-## QA Summary
-
-**Testing scope:** 15 API routes/pages tested via curl and source review. Browser-based visual testing was blocked by Chromium sandbox restrictions in the container.
-
-**Issues found: 2, both fixed and verified:**
-
-1. **ISSUE-001** (High): `POST /api/auth/signup` returned 500 on malformed JSON. Fixed by adding try-catch around `request.json()`. Commit: `d861db8`
-2. **ISSUE-002** (High): `POST /api/profile` returned 500 on malformed JSON. Same fix pattern. Commi... ($6.32, 549s)
-- **ship**: **STATUS: DONE_WITH_CONCERNS**
-
-## Ship Summary
-
-**Branch:** `feat/task-23-tests-and-qa-fixes` pushed to origin successfully.
-
-**Commits shipped (3):**
-1. `d861db8` — fix(qa): ISSUE-001 — handle malformed JSON in signup endpoint
-2. `ec2e97d` — fix(qa): ISSUE-002 — handle malformed JSON in profile endpoint
-3. `1660f90` — chore: bump version and changelog (v0.1.0.3)
-
-**Version:** 0.1.0.2 -> 0.1.0.3
-
-**Verification:**
-- 94/94 tests passing
-- TypeScript clean
-- Build successful
-
-**Conce... ($4.44, 207s)
-- **write-notes**: Session note written to `notes/2026-06-02-1905-summary.md`. Covers: Task 23 completion (52 new tests), 2 QA bug fixes, infrastructure changes for container compatibility, version bump to 0.1.0.3, and known blockers (gh auth, Chromium sandbox, NODE_ENV). ($1.40, 50s)
-- **update-todos**: Updated `TODOS.md`: marked Task 23 as `[x]` (done) with details on the 52 new tests, QA fixes, and infrastructure changes. Tasks 24-26 remain as `[ ]` (todo). All other phases unchanged. ($1.65, 37s)
-- **file-needs**: The existing NEEDS.md already covers the Google Maps API key blocker (Task 13). Let me check if there are any new blockers from this session that need to be added.
-
-Current blockers from this session:
-1. **Google Maps API Key** — already documented, still blocks Task 13
-2. **Chromium sandbox in container** — blocks browser-based E2E testing (Task 24), but this is an infrastructure limitation, not something the user can provide
-3. **GitHub CLI auth** — blocks auto-PR creation, but the us... ($1.34, 20s)
-- **sync-progress**: Here's the progress count:
-
-## Project Progress Summary
-
-| Phase | Tasks | Done | Blocked | Todo |
-|-------|-------|------|---------|------|
-| Phase 1: Project Setup & Infrastructure | 4 | 4 | 0 | 0 |
-| Phase 2: Data Modeling & Database Schema | 4 | 4 | 0 | 0 |
-| Phase 3: Authentication & Profile Onboarding | 3 | 3 | 0 | 0 |
-| Phase 4: Suggestion Engine | 3 | 2 | 1 | 0 |
-| Phase 5: Filtering, Categories & Browse UI | 3 | 3 | 0 | 0 |
-| Phase 6: Save & Bookmark System | 2 | 2 | 0 | 0 |
-| Phase ... ($1.37, 19s)
+| Metric | Count |
+|---|---|
+| **Total top-level tasks** | 26 |
+| **Completed** `[x]` | 23 |
+| **Blocked** `[!]` | 1 (Task 13 - Google Maps API key) |
+| **Todo** `[ ]` | 2 (Tasks 25, 26) |
+| **Completion** | **88%** (23/26) |
+| **Current phase** | Phase 8: Testing & Launch Prep |
+| **Remaining** | Task 25 (performance/security review), Task 26 (Vercel deployment) | ($1.40, 11s)
 

@@ -9,14 +9,15 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const profile = await prisma.profile.findUnique({
-    where: { userId: session.user.id },
-  });
-
-  const userInterests = await prisma.userInterest.findMany({
-    where: { userId: session.user.id },
-    select: { interestId: true },
-  });
+  const [profile, userInterests] = await Promise.all([
+    prisma.profile.findUnique({
+      where: { userId: session.user.id },
+    }),
+    prisma.userInterest.findMany({
+      where: { userId: session.user.id },
+      select: { interestId: true },
+    }),
+  ]);
 
   return NextResponse.json({
     profile,

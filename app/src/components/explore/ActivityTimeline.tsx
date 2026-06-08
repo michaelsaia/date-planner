@@ -1,5 +1,3 @@
-"use client";
-
 type Activity = {
   name: string;
   venueName: string;
