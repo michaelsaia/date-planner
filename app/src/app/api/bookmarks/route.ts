@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { z } from "zod";
+import { rateLimit } from "@/lib/rate-limit";
+
+// 60 bookmark toggles per minute per user
+const BOOKMARK_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 60 };
 
 const toggleSchema = z.object({
   dateIdeaId: z.string().min(1, "dateIdeaId is required"),
@@ -35,6 +39,14 @@ export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = rateLimit(`bookmarks:${session.user.id}`, BOOKMARK_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429 },
+    );
   }
 
   let body: unknown;

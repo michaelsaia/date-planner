@@ -76,6 +76,23 @@ describe("validations", () => {
         }),
       ).toThrow();
     });
+
+    it("rejects more than 50 interests", () => {
+      const tooMany = Array.from({ length: 51 }, (_, i) => `interest-${i}`);
+      expect(() =>
+        profileSchema.parse({
+          interests: tooMany,
+          budgetRange: { min: 0, max: 100 },
+          homeLocation: null,
+        }),
+      ).toThrow();
+    });
+
+    it("rejects budget values over 10000", () => {
+      expect(() =>
+        budgetRangeSchema.parse({ min: 0, max: 20000 }),
+      ).toThrow();
+    });
   });
 
   describe("filterSchema", () => {
@@ -87,6 +104,18 @@ describe("validations", () => {
     it("accepts empty filter", () => {
       const result = filterSchema.parse({});
       expect(result).toBeDefined();
+    });
+
+    it("rejects more than 5 moods", () => {
+      expect(() =>
+        filterSchema.parse({
+          moods: ["romantic", "adventurous", "low-key", "foodie", "active", "romantic"],
+        }),
+      ).toThrow();
+    });
+
+    it("rejects budget values over 10000", () => {
+      expect(() => filterSchema.parse({ budgetMax: 50000 })).toThrow();
     });
   });
 });

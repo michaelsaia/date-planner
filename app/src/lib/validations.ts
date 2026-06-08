@@ -20,8 +20,8 @@ export const locationSchema = z.object({
 });
 
 export const budgetRangeSchema = z.object({
-  min: z.number().min(0),
-  max: z.number().min(0),
+  min: z.number().min(0).max(10000),
+  max: z.number().min(0).max(10000),
 }).refine((data) => data.max >= data.min, {
   message: "Max budget must be greater than or equal to min budget",
 });
@@ -29,13 +29,13 @@ export const budgetRangeSchema = z.object({
 export const moodSchema = z.enum(["romantic", "adventurous", "low-key", "foodie", "active"]);
 
 export const profileSchema = z.object({
-  interests: z.array(z.string()).min(1, "Select at least one interest"),
+  interests: z.array(z.string().max(50)).min(1, "Select at least one interest").max(50, "Too many interests selected"),
   budgetRange: budgetRangeSchema,
   homeLocation: locationSchema.nullable(),
 });
 
 export const filterSchema = z.object({
-  moods: z.array(moodSchema).optional(),
-  budgetMin: z.number().min(0).optional(),
-  budgetMax: z.number().min(0).optional(),
+  moods: z.array(moodSchema).max(5).optional(),
+  budgetMin: z.number().min(0).max(10000).optional(),
+  budgetMax: z.number().min(0).max(10000).optional(),
 });

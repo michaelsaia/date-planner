@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { profileSchema } from "@/lib/validations";
+import { rateLimit } from "@/lib/rate-limit";
+
+// 10 profile saves per minute per user
+const PROFILE_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 10 };
 
 export async function GET() {
   const session = await auth();
@@ -12,6 +16,7 @@ export async function GET() {
   const [profile, userInterests] = await Promise.all([
     prisma.profile.findUnique({
       where: { userId: session.user.id },
+      select: { budgetMin: true, budgetMax: true, homeLat: true, homeLng: true, homeLabel: true },
     }),
     prisma.userInterest.findMany({
       where: { userId: session.user.id },
@@ -29,6 +34,14 @@ export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = rateLimit(`profile:${session.user.id}`, PROFILE_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429 },
+    );
   }
 
   let body: unknown;

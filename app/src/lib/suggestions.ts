@@ -57,19 +57,29 @@ export async function getSuggestionsForUser(
   const budgetMin = filters.budgetMin ?? profile?.budgetMin ?? 0;
   const budgetMax = filters.budgetMax ?? profile?.budgetMax ?? 500;
 
-  // Build where clause for date ideas
+  // Build where clause with DB-level filtering
   const whereClause: Record<string, unknown> = {};
 
   if (filters.moods && filters.moods.length > 0) {
     whereClause.mood = { in: filters.moods };
   }
 
+  // Apply budget filter at DB level with generous margin for scoring decay
+  const budgetMargin = (budgetMax - budgetMin) || 50;
+  whereClause.estimatedCost = {
+    gte: Math.max(0, budgetMin - budgetMargin),
+    lte: budgetMax + budgetMargin,
+  };
+
   // Fetch date ideas with their interests and activities
   const ideas = await prisma.dateIdea.findMany({
     where: whereClause,
     include: {
-      activities: { orderBy: { order: "asc" } },
-      interests: { include: { interest: true } },
+      activities: {
+        orderBy: { order: "asc" },
+        select: { name: true, venueName: true, venueUrl: true, mapsUrl: true, order: true },
+      },
+      interests: { include: { interest: { select: { id: true, name: true } } } },
     },
   });
 
