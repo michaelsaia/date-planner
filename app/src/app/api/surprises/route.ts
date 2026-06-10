@@ -7,6 +7,10 @@ import {
 } from "@/lib/surprises";
 import type { Mood } from "@/types";
 import { moodSchema } from "@/lib/validations";
+import { rateLimit } from "@/lib/rate-limit";
+
+// 30 surprise requests per minute per user
+const SURPRISES_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 30 };
 
 /**
  * GET /api/surprises
@@ -22,6 +26,14 @@ export async function GET(request: Request) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = rateLimit(`surprises:${session.user.id}`, SURPRISES_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429 },
+    );
   }
 
   const { searchParams } = new URL(request.url);
@@ -56,9 +68,13 @@ export async function GET(request: Request) {
   }
 
   const count = Math.min(Math.max(Number(countParam) || 1, 1), 5);
-  const exclude = excludeParam
-    ? new Set(excludeParam.split(",").map((s) => s.trim()))
-    : undefined;
+
+  // Cap exclude list to prevent abuse with huge payloads
+  let exclude: Set<string> | undefined;
+  if (excludeParam) {
+    const ids = excludeParam.split(",").map((s) => s.trim()).filter(Boolean).slice(0, 50);
+    exclude = new Set(ids);
+  }
 
   const mood = moodParam as Mood | undefined;
   const category = categoryParam as SurpriseCategory | undefined;

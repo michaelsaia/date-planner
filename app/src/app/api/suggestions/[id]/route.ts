@@ -3,6 +3,10 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { computeScore } from "@/lib/scoring";
 import { pickSurpriseForIdea } from "@/lib/surprises";
+import { rateLimit } from "@/lib/rate-limit";
+
+// 60 detail views per minute per user
+const DETAIL_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 60 };
 
 export async function GET(
   _request: Request,
@@ -13,7 +17,20 @@ export async function GET(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
+  const rl = rateLimit(`suggestion-detail:${session.user.id}`, DETAIL_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429 },
+    );
+  }
+
   const { id } = await params;
+
+  // Reject obviously invalid IDs to avoid unnecessary DB queries
+  if (!id || id.length > 30) {
+    return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
+  }
 
   const idea = await prisma.dateIdea.findUnique({
     where: { id },
