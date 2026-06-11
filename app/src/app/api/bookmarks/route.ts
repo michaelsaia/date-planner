@@ -6,9 +6,11 @@ import { rateLimit } from "@/lib/rate-limit";
 
 // 60 bookmark toggles per minute per user
 const BOOKMARK_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 60 };
+// 30 bookmark list requests per minute per user
+const BOOKMARK_LIST_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 30 };
 
 const toggleSchema = z.object({
-  dateIdeaId: z.string().min(1, "dateIdeaId is required"),
+  dateIdeaId: z.string().min(1, "dateIdeaId is required").max(30, "Invalid dateIdeaId"),
 });
 
 /**
@@ -18,6 +20,14 @@ export async function GET() {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = rateLimit(`bookmarks-list:${session.user.id}`, BOOKMARK_LIST_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
+    );
   }
 
   const bookmarks = await prisma.bookmark.findMany({
@@ -45,7 +55,7 @@ export async function POST(request: Request) {
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Too many requests. Please slow down." },
-      { status: 429 },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
     );
   }
 

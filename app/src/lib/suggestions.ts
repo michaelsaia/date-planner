@@ -71,15 +71,22 @@ export async function getSuggestionsForUser(
     lte: budgetMax + budgetMargin,
   };
 
-  // Fetch date ideas with their interests and activities
+  // Fetch date ideas with their interests and activities (narrow select for performance)
   const ideas = await prisma.dateIdea.findMany({
     where: whereClause,
-    include: {
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      mood: true,
+      estimatedCost: true,
+      surprise: true,
+      imageUrl: true,
       activities: {
         orderBy: { order: "asc" },
         select: { name: true, venueName: true, venueUrl: true, mapsUrl: true, order: true },
       },
-      interests: { include: { interest: { select: { id: true, name: true } } } },
+      interests: { select: { interestId: true, interest: { select: { id: true, name: true } } } },
     },
   });
 

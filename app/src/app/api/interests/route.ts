@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Too many requests. Please slow down." },
-      { status: 429 },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
     );
   }
 

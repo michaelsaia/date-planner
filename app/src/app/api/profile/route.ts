@@ -6,11 +6,21 @@ import { rateLimit } from "@/lib/rate-limit";
 
 // 10 profile saves per minute per user
 const PROFILE_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 10 };
+// 30 profile reads per minute per user
+const PROFILE_READ_RATE_LIMIT = { windowMs: 60 * 1000, maxRequests: 30 };
 
 export async function GET() {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const rl = rateLimit(`profile-read:${session.user.id}`, PROFILE_READ_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: "Too many requests. Please slow down." },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
+    );
   }
 
   const [profile, userInterests] = await Promise.all([
@@ -40,7 +50,7 @@ export async function POST(request: Request) {
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Too many requests. Please slow down." },
-      { status: 429 },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
     );
   }
 

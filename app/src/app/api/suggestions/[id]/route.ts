@@ -21,7 +21,7 @@ export async function GET(
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Too many requests. Please slow down." },
-      { status: 429 },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
     );
   }
 
@@ -34,9 +34,19 @@ export async function GET(
 
   const idea = await prisma.dateIdea.findUnique({
     where: { id },
-    include: {
-      activities: { orderBy: { order: "asc" } },
-      interests: { include: { interest: true } },
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      mood: true,
+      estimatedCost: true,
+      surprise: true,
+      imageUrl: true,
+      activities: {
+        orderBy: { order: "asc" },
+        select: { name: true, venueName: true, venueUrl: true, mapsUrl: true, order: true },
+      },
+      interests: { select: { interestId: true, interest: { select: { id: true, name: true } } } },
     },
   });
 
@@ -46,7 +56,7 @@ export async function GET(
 
   // Load user data for scoring, interest matching, and bookmark status
   const [profile, userInterests, bookmark] = await Promise.all([
-    prisma.profile.findUnique({ where: { userId: session.user.id } }),
+    prisma.profile.findUnique({ where: { userId: session.user.id }, select: { budgetMin: true, budgetMax: true } }),
     prisma.userInterest.findMany({
       where: { userId: session.user.id },
       select: { interestId: true },
